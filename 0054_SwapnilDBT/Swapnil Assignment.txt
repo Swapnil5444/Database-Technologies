@@ -1,0 +1,1192 @@
+                                                      TASK 1
+
+
+CREATE DATABASE SWAPNIL;
+
+
+
+                                                       TASK 2
+
+CREATE TABLE friendList (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    contact VARCHAR(15),
+    address VARCHAR(255)
+);
+
+INSERT INTO friendList (id, name, contact, address) VALUES
+(1, 'Aryan Palaspagar', '9234567890', 'Thane'),
+(2, 'Swapnil Rathod', '9876543210', 'Kalwa'),
+(3, 'Jaya Gupta', '9341234567', 'Kalyan'),
+(4, 'Ekta Panchal', '9812223333', 'Dahisar'),
+(5, 'Saaras Gaikwad', '9445556666', 'Pune'),
+(6, 'Meet Jamsutkar', '8778889999', 'Kalher'),
+(7, 'Tanaya Patil', '8901112222', 'Dombivali');
+
+                                                        TASK 3
+
+CREATE TABLE employee (
+    name_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    post VARCHAR(50),
+    gender VARCHAR(10),
+    salary DECIMAL(10,2),
+    state VARCHAR(50),
+    district VARCHAR(50),
+    age INT,
+    email VARCHAR(100)
+);
+
+INSERT INTO employee (name_id, name, post, gender, salary, state, district, age, email) VALUES
+(1, 'Veena Sharma', 'Manager', 'Female', 75000.00, 'Maharashtra', 'Pune', 35, 'veena@gmail.com'),
+(2, 'Priya Verma', 'HR', 'Female', 58000.00, 'Uttar Pradesh', 'Lucknow', 29, 'priya.verma@gmail.com'),
+(3, 'Ankit Purohit', 'Software Engineer', 'Male', 67000.00, 'Karnataka', 'Bangalore', 27, 'ankit@gmail.com'),
+(4, 'Rutuja Patil', 'Data Analyst', 'Female', 62000.00, 'Maharashtra', 'Mumbai', 30, 'rutuja@gmail.com'),
+(5, 'Arjun Kirloskar', 'Team Lead', 'Male', 80000.00, 'Telangana', 'Hyderabad', 32, 'arjun@gmail.com'),
+(6, 'Priya Iyer', 'UI/UX Designer', 'Female', 60000.00, 'Tamil Nadu', 'Chennai', 28, 'priya@gmail.com'),
+(7, 'Prem Singh', 'Devops Engineer', 'Male', 70000.00, 'Delhi', 'New Delhi', 31, 'prem@gmail.com'),
+(8, 'Vijita Nair', 'Project Manager', 'Female', 85000.00, 'Kerala', 'Kochi', 36, 'vijita@gmail.com'),
+(9, 'Jayesh Awhad', 'QA Engineer', 'Male', 55000.00, 'West Bengal', 'Kolkata', 26, 'jayesh@gmail.com'),
+(10, 'Kaushalya Joshi', 'Intern', 'Female', 25000.00, 'Gujarat', 'Ahmedabad', 22, 'kaushalya@gmail.com');
+
+UPDATE employee SET salary = 72000.00 WHERE name_id = 3;
+
+DROP TABLE employee;
+
+
+                                                           TASK 4
+
+CREATE TABLE productDetails (
+    field_id INT PRIMARY KEY,
+    productid INT UNIQUE,
+    pname VARCHAR(100) NOT NULL,
+    pprice DECIMAL(10,2) NOT NULL,
+    pcompany VARCHAR(100) NOT NULL ,
+    pquantity INT,
+    available BOOLEAN
+);
+
+
+INSERT INTO productDetails (field_id, productid, pname, pprice, pcompany, pquantity, available) VALUES
+(1, '101', 'Tata Salt', 20.00, 'Tata Consumer Products', 150, TRUE),
+(2, '102', 'Amul Butter', 52.00, 'Amul', 100, TRUE),
+(3, '103', 'Parle-G Biscuits', 10.00, 'Parle Products', 200, FALSE),
+(4, '104', 'Surf Excel Detergent', 120.00, 'Hindustan Unilever', 80, TRUE),
+(5, '105', 'Dabur Honey', 199.00, 'Dabur', 60, FALSE),
+(6, '106', 'Redmi Note 12', 14999.00, 'Xiaomi India', 30, TRUE),
+(7, '107', 'Prestige Pressure Cooker', 899.00, 'TTK Prestige', 25, FALSE),
+(8, '108', 'Aashirwad Atta', 250.00, 'Amul', 120, TRUE),
+(9, '109', 'Vicco Turmeric Cream', 70.00, 'Vicco Labs', 90, FALSE),
+(10, '110', 'Himalaya Face Wash', 150.00, 'Himalaya', 75, FALSE);
+
+
+1.ALTER TABLE productDetails ADD COLUMN city VARCHAR(100);
+ALTER TABLE productDetails ADD COLUMN pincode VARCHAR(10);
+
+2.UPDATE productDetails SET city = 'Mumbai', pincode = '400001' WHERE field_id = 1;
+UPDATE productDetails SET city = 'Ahmedabad', pincode = '380001' WHERE field_id = 2;
+UPDATE productDetails SET city = 'Lucknow', pincode = '226001' WHERE field_id = 3;
+UPDATE productDetails SET city = 'Bangalore', pincode = '560001' WHERE field_id = 4;
+UPDATE productDetails SET city = 'Delhi', pincode = '110001' WHERE field_id = 5;
+UPDATE productDetails SET city = 'Hyderabad', pincode = '500001' WHERE field_id = 6;
+UPDATE productDetails SET city = 'Chennai', pincode = '600001' WHERE field_id = 7;
+UPDATE productDetails SET city = 'Kolkata', pincode = '700001' WHERE field_id = 8;
+UPDATE productDetails SET city = 'Pune', pincode = '411001' WHERE field_id = 9;
+UPDATE productDetails SET city = 'Jaipur', pincode = '302001' WHERE field_id = 10;
+
+3.SELECT * FROM productDetails WHERE available = FALSE;
+
+4.select * FROM productDetails WHERE pcompany='Tata Salt';
+
+5.TRUNCATE TABLE productDetails;
+
+6.DROP TABLE productDetails;
+                                                        TASK 5
+
+All ER Diagram are in another PDF.
+
+                                                         TASK 6
+
+SELECT salary AS emp_salary FROM employee;
+
+
+                                                          TASK 7
+create database projectDB;
+
+1.COMPANY
+
+CREATE TABLE Company (company_id INT PRIMARY KEY,company_name VARCHAR(100) NOT NULL, industry_type VARCHAR(100), headquarters VARCHAR(100));
+
+CREATE TABLE CompanyBranches (branch_id INT PRIMARY KEY,company_id INT,branch_name VARCHAR(100) NOT NULL,location VARCHAR(100),FOREIGN KEY (company_id) REFERENCES Company(company_id));
+
+CREATE TABLE CompanyEmployees (employee_id INT PRIMARY KEY,name VARCHAR(100), branch_id INT,department_id INT,designation VARCHAR(50),salary DECIMAL(10,2),FOREIGN KEY (branch_id) REFERENCES CompanyBranches(branch_id));
+
+CREATE TABLE Departments (department_id INT PRIMARY KEY,department_name VARCHAR(100), branch_id INT,FOREIGN KEY (branch_id) REFERENCES CompanyBranches(branch_id));
+
+
+CREATE TABLE Projects (project_id INT PRIMARY KEY, project_name VARCHAR(100),department_id INT,start_date DATE,end_date DATE,FOREIGN KEY (department_id) REFERENCES Departments(department_id));
+
+INSERT INTO Company VALUES (1, 'Infosys Ltd.', 'IT Services', 'Bangalore'), (2, 'Tata Motors', 'Automobile', 'Mumbai');
+INSERT INTO CompanyBranches VALUES(101, 1, 'Infosys Pune Branch', 'Pune'), (102, 2, 'Tata Pimpri Branch', 'Pune');
+INSERT INTO Departments VALUES(201, 'IT', 101),(202, 'HR', 101),(203, 'Production', 102),(204, 'R&D', 102);
+INSERT INTO CompanyEmployees VALUES(1, 'Ravi Kumar', 101, 201, 'Software Engineer', 60000),(2, 'Sneha Sharma', 101, 202, 'HR Manager', 50000),(3, 'Amit Joshi', 102, 203, 'Mechanical Engineer', 55000),(4, 'Pooja Desai', 102, 204, 'Research Analyst', 58000);
+
+INSERT INTO Projects VALUES(301, 'AI Chatbot', 201, '2025-08-01', '2025-12-31'),(302, 'HR Automation', 202, '2025-09-01', '2026-01-31'),(303, 'EV Engine Design', 203, '2025-07-01', '2026-06-30');
+ 
+
+2.BANK
+
+
+CREATE TABLE Customers (customer_id INT PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(100),phone VARCHAR(20),address VARCHAR(100));
+CREATE TABLE Branches (branch_id INT PRIMARY KEY, branch_name VARCHAR(100) NOT NULL,location VARCHAR(100));
+CREATE TABLE Accounts ( account_id INT PRIMARY KEY,customer_id INT,branch_id INT,account_type VARCHAR(50), balance DECIMAL(15,2),FOREIGN KEY (customer_id) REFERENCES Customers(customer_id),FOREIGN KEY (branch_id) REFERENCES Branches(branch_id));
+
+CREATE TABLE Transactions ( transaction_id INT PRIMARY KEY, account_id INT,amount DECIMAL(15,2),transaction_type VARCHAR(50), transaction_date DATE, FOREIGN KEY (account_id) REFERENCES Accounts(account_id));
+
+CREATE TABLE Employees (employee_id INT PRIMARY KEY,name VARCHAR(100),branch_id INT,FOREIGN KEY (branch_id) REFERENCES Branches(branch_id));
+
+INSERT INTO Customers (customer_id, name, email, phone, address) VALUES
+(1, 'Jaya Gupta','jaya@gmail.com', '9896756789', 'Thane'),
+(2, 'Raj Mehra', 'raj@gmail.com', '9876543210', 'Kalyan'),
+(3, 'Anusha V', 'anusha@gmail.com', '9892649591', 'Mulund'),
+(4, 'Dalbirsingh Matharu', 'dalbirsingh@gmail.com', '8850576625', 'Dadar'),
+(5, 'Ariba Shaikh', 'ariba@gmail.com', '9874567890', 'Parel');
+
+
+INSERT INTO Branches (branch_id, branch_name, location) VALUES
+(101, 'Kalwa Branch', 'Thane'),
+(102, 'Masjid Branch', 'CSMT'),
+(103, 'Nahur Branch', 'Mulund'),
+(104, 'Titwala Branch', 'Kalyan'),
+(105, 'Matunga Branch', 'Dadar');
+
+
+INSERT INTO Accounts (account_id, customer_id, branch_id, account_type, balance) VALUES
+(5678, 1, 101, 'Savings', 1500.00),
+(8547, 2, 102, 'Current', 2500.50),
+(1234, 3, 103, 'Savings', 3200.75),
+(2345, 4, 104, 'Current', 1000.00),
+(7890, 5, 105, 'Savings', 5000.00);
+
+
+INSERT INTO Transactions (transaction_id, account_id, amount, transaction_type, transaction_date) VALUES
+(5432, 5678, 500.00, 'Deposit', '2025-08-01'),
+(2123, 8547, 200.00, 'Withdrawal', '2025-08-02'),
+(3421, 1234, 1500.00, 'Deposit', '2025-08-03'),
+(4654, 2345, 300.00, 'Withdrawal', '2025-08-04'),
+(5890, 7890, 250.00, 'Deposit', '2025-08-05');
+
+INSERT INTO Employees (employee_id, name, branch_id) VALUES
+(1, 'Sarla Mary', 101),
+(2, 'Pravin Shinde', 102),
+(3, 'Ujwala Pagare', 103),
+(4, 'Uttam Kolekar', 104),
+(5, 'Kiran Deshpande', 105);
+
+3.Hospital
+
+
+CREATE TABLE Hospital (hospital_id INT PRIMARY KEY, hospital_name VARCHAR(100) NOT NULL,location VARCHAR(100),contact_number VARCHAR(15));
+
+
+CREATE TABLE Departments (department_id INT PRIMARY KEY,department_name VARCHAR(100),hospital_id INT,FOREIGN KEY (hospital_id) REFERENCES Hospital(hospital_id));
+
+
+CREATE TABLE Doctors (doctor_id INT PRIMARY KEY,name VARCHAR(100),specialization VARCHAR(100),department_id INT,hospital_id INT,contact_number VARCHAR(15),FOREIGN KEY (department_id) REFERENCES Departments(department_id),FOREIGN KEY (hospital_id) REFERENCES Hospital(hospital_id)
+);
+
+CREATE TABLE Patients (patient_id INT PRIMARY KEY,name VARCHAR(100),age INT,gender VARCHAR(10),contact_number VARCHAR(15),address VARCHAR(255));
+
+CREATE TABLE Appointments (appointment_id INT PRIMARY KEY, patient_id INT,doctor_id INT,appointment_date DATE,diagnosis VARCHAR(255),FOREIGN KEY (patient_id) REFERENCES Patients(patient_id),FOREIGN KEY (doctor_id) REFERENCES Doctors(doctor_id));
+
+INSERT INTO Hospital VALUES(1, 'Apollo Hospital', 'Mumbai', '02212345678'),(2, 'Fortis Hospital', 'Delhi', '01198765432');
+
+INSERT INTO Departments VALUES(101, 'Cardiology', 1),(102, 'Neurology', 1),(103, 'Orthopedics', 2),(104, 'Pediatrics', 2);
+
+INSERT INTO Doctors VALUES(1, 'Dr. Ramesh Iyer', 'Cardiologist', 101, 1, '9890011122'),(2, 'Dr. Anita Shah', 'Neurologist', 102, 1, '9890022233'),(3, 'Dr. Manoj Patil', 'Orthopedic', 103, 2, '9890033344'),(4, 'Dr. Swati Mehra', 'Pediatrician', 104, 2, '9890044455');
+
+INSERT INTO Patients VALUES(1, 'Sunil Kumar', 45, 'Male', '9876543210', 'Thane, Mumbai'),(2, 'Pooja Rani', 30, 'Female', '9876543221', 'Andheri, Mumbai'),(3, 'Karan Singh', 55, 'Male', '9876543332', 'Dwarka, Delhi'),(4, 'Neha Joshi', 10, 'Female', '9876543443', 'Rohini, Delhi');
+
+INSERT INTO Appointments VALUES(1001, 1, 1, '2025-09-01', 'High Blood Pressure'),(1002, 2, 2, '2025-09-02', 'Migraine'),(1003, 3, 3, '2025-09-03', 'Knee Pain'),(1004, 4, 4, '2025-09-04', 'Fever and Cold');
+
+4.Hotel
+
+CREATE TABLE Hotels (hotel_id INT PRIMARY KEY, hotel_name VARCHAR(100) NOT NULL, location VARCHAR(100),contact_number VARCHAR(15));
+
+
+CREATE TABLE Rooms (room_id INT PRIMARY KEY,hotel_id INT,room_number VARCHAR(10),room_type VARCHAR(50),price_per_night DECIMAL(10, 2),is_available BOOLEAN,FOREIGN KEY (hotel_id) REFERENCES Hotels(hotel_id));
+
+
+CREATE TABLE Guests (guest_id INT PRIMARY KEY,name VARCHAR(100),gender VARCHAR(10),phone VARCHAR(15),email VARCHAR(100));
+
+
+CREATE TABLE Bookings (booking_id INT PRIMARY KEY,guest_id INT,room_id INT,check_in_date DATE,check_out_date DATE,total_amount DECIMAL(10,2),FOREIGN KEY (guest_id) REFERENCES Guests(guest_id),FOREIGN KEY (room_id) REFERENCES Rooms(room_id));
+
+
+CREATE TABLE Staff (staff_id INT PRIMARY KEY,hotel_id INT,name VARCHAR(100),role VARCHAR(50),salary DECIMAL(10, 2),FOREIGN KEY (hotel_id) REFERENCES Hotels(hotel_id));
+
+INSERT INTO Hotels VALUES
+(1, 'Taj Palace', 'Mumbai', '02212345678'),
+(2, 'The Oberoi', 'Delhi', '01198765432');
+
+INSERT INTO Rooms VALUES
+(101, 1, 'A101', 'Deluxe', 5000.00, TRUE),
+(102, 1, 'A102', 'Suite', 7500.00, TRUE),
+(103, 2, 'B201', 'Single', 3000.00, TRUE),
+(104, 2, 'B202', 'Double', 4500.00, TRUE);
+
+INSERT INTO Guests VALUES
+(1, 'Amit Sharma', 'Male', '9876543210', 'amit@gmail.com'),
+(2, 'Neha Singh', 'Female', '9876543221', 'neha@gmail.com');
+
+INSERT INTO Bookings VALUES
+(1001, 1, 101, '2025-09-05', '2025-09-07', 10000.00),
+(1002, 2, 104, '2025-09-10', '2025-09-12', 9000.00);
+
+INSERT INTO Staff VALUES
+(1, 1, 'Ravi Patil', 'Manager', 60000.00),
+(2, 1, 'Sonal Desai', 'Receptionist', 30000.00),
+(3, 2, 'Ankit Verma', 'Housekeeping', 20000.00),
+(4, 2, 'Kavita Nair', 'Chef', 35000.00);
+
+
+5.Restaurant
+
+CREATE TABLE Customers (customer_id INT PRIMARY KEY,name VARCHAR(100) NOT NULL,email VARCHAR(100),phone VARCHAR(20),address VARCHAR(100));
+
+CREATE TABLE Branches ( branch_id INT PRIMARY KEY,branch_name VARCHAR(100) NOT NULL,location VARCHAR(100));
+
+CREATE TABLE Orders (order_id INT PRIMARY KEY,customer_id INT,branch_id INT,order_date DATE,total_amount DECIMAL(10,2),FOREIGN KEY (customer_id) REFERENCES Customers(customer_id),FOREIGN KEY (branch_id) REFERENCES Branches(branch_id));
+
+CREATE TABLE OrderItems (order_item_id INT PRIMARY KEY,order_id INT,item_name VARCHAR(100),quantity INT,price DECIMAL(10,2),FOREIGN KEY (order_id) REFERENCES Orders(order_id));
+
+CREATE TABLE Employees (employee_id INT PRIMARY KEY,name VARCHAR(100),branch_id INT,role VARCHAR(50),FOREIGN KEY (branch_id) REFERENCES Branches(branch_id));
+
+INSERT INTO Customers VALUES (1, 'Rohit Sharma', 'rohit@gmail.com', '9876543210', 'Andheri, Mumbai'), (2, 'Neha Singh', 'neha@gmail.com', '9876543221', 'Borivali, Mumbai'),(3, 'Arjun Patel', 'arjun@gmail.com', '9876543332', 'Goregaon, Mumbai'),(4, 'Priya Desai', 'priya@gmail.com', '9876543443', 'Malad, Mumbai'),(5, 'Karan Joshi', 'karan@gmail.com', '9876543554', 'Thane');
+
+INSERT INTO Branches VALUES(101, 'Main Street Branch', 'Andheri'),(102, 'Downtown Branch', 'Borivali'),(103, 'Seaside Branch', 'Goregaon'),(104, 'Hillview Branch', 'Malad'),(105, 'City Center Branch', 'Thane');
+
+INSERT INTO Orders VALUES(201, 1, 101, '2025-08-01', 1200.00),(202, 2, 102, '2025-08-02', 800.50),(203, 3, 103, '2025-08-03', 2300.75),(204, 4, 104, '2025-08-04', 1100.00),(205, 5, 105, '2025-08-05', 500.00);
+
+INSERT INTO OrderItems VALUES(301, 201, 'Paneer Butter Masala', 2, 500.00),(302, 201, 'Garlic Naan', 4, 200.00),(303, 202, 'Veg Biryani', 1, 300.50),(304, 203, 'Chicken Tikka', 3, 1500.00),(305, 204, 'Masala Dosa', 2, 600.00),(306, 204, 'Coffee', 2, 200.00),(307, 205, 'French Fries', 1, 200.00),(308, 205, 'Cold Drink', 1, 300.00);
+
+INSERT INTO Employees VALUES(1, 'Amit Joshi', 101, 'Manager'),(2, 'Sneha Rao', 102, 'Chef'),(3, 'Rajesh Kumar', 103, 'Waiter'),(4, 'Priyanka Singh', 104, 'Receptionist'),(5, 'Vikram Patel', 105, 'Chef');
+
+                                                                  TASK 8
+
+CREATE TABLE students(student_id INT PRIMARY KEY,student_name VARCHAR(50),E_mail VARCHAR(50),is_active BOOLEAN);
+
+CREATE TABLE courses(course_id INT PRIMARY KEY,course_name VARCHAR(50),Duration_month INT);
+
+CREATE TABLE Enrollment (enrollment_id INT PRIMARY KEY,student_id INT, course_id INT,is_completed BOOLEAN DEFAULT FALSE,FOREIGN KEY (student_id) REFERENCES students(student_id),FOREIGN KEY (course_id) REFERENCES courses(course_id));
+
+
+INSERT INTO students (student_id, student_name, E_mail, is_active) VALUES
+(101, 'Jatin Singh', 'jatin@gmail.com', TRUE),
+(102, 'Swapnil Rathod', 'swapnil@gmail.com', TRUE),
+(103, 'Rishabh Sharma', 'rishabh@gmail.com', FALSE),
+(104, 'Soham Palav', 'soham@gmail.com', TRUE),
+(105, 'Prem Singh', 'prem@gmail.com', TRUE),
+(106, 'Tanaya Patil', 'tanaya@gmail.com', FALSE),
+(107, 'Riya Sawant', 'riya@gmail.com', TRUE),
+(108, 'Sanika Shelke', 'sanika@gmail.com', TRUE),
+(109, 'Rutuja Patil', 'rutuja@gmail.com', FALSE),
+(110, 'Tanvi Panchal', 'tanvi@gmail.com', TRUE);
+
+
+INSERT INTO courses (course_id, course_name, Duration_month) VALUES
+(1001, 'Computer Science', 36),
+(1002, 'Mechanical Engineering', 12),
+(1003, 'Electrical Engineering', 48),
+(1004, 'Civil Engineering', 36),
+(1005, 'Business Administration', 24),
+(1006, 'Psychology', 10),
+(1007, 'Mathematics', 15),
+(1008, 'Physics', 25),
+(1009, 'Chemistry', 24),
+(1010, 'English Literature', 27);
+
+INSERT INTO Enrollment (enrollment_id, student_id, course_id, is_completed) VALUES
+(1991, 101, 1001, FALSE),
+(1992, 102, 1002, TRUE),
+(1993, 103, 1003, FALSE),
+(1994, 104, 1004, TRUE),
+(1995, 105, 1005, FALSE),
+(1996, 106, 1006, TRUE),
+(1997, 107, 1007, FALSE),
+(1998,108, 1008, TRUE),
+(1999, 109, 1009, FALSE),
+(2000, 110, 1010, TRUE);
+                                                                  TASK 9
+
+
+Company ER Diagram are in another PDF.
+
+                                                                   TASK 10
+
+    
+CREATE table Restaurant(rest_id INT PRIMARY KEY,rest_name VARCHAR(30),Location VARCHAR(40));
+
+CREATE table Orders(order_id INT,rest_id INT,cust_name VARCHAR(30),amount DECIMAL(8,2),Order_date DATE,FOREIGN KEY(rest_id) REFERENCES Restaurant(rest_id));
+
+
+
+
+INSERT INTO Restaurant (rest_id, rest_name, Location) VALUES
+(1, 'Fast and Foodies', 'Chennai'),
+(2, 'Punjab Da Dhabba', 'Delhi'),
+(3, 'Taj Hotel', 'Mumbai'),
+(4, 'The Duck', 'Bangalore'),
+(5, 'Pizza Planet', 'Hyderabad'),
+(6, 'Pink Martin', 'Noida'),
+(7, 'Haldiram','Gujrat'),
+(8, 'Prashant Corner', 'Mumbai');
+
+
+INSERT INTO Orders (order_id, rest_id, cust_name, amount, order_date) VALUES
+(101, 1, 'Anushka Sen', 45.50, '2025-08-01'),
+(102, 2, 'Veena Sharma', 32.00, '2025-08-02'),
+(103, 3, 'Sanjay Ram', 28.75, '2025-08-03'),
+(104, 4, 'Omprakash Jaiswar', 52.20, '2025-08-04'),
+(105, 5, 'Ravindranath Verma', 38.90, '2025-08-05'),
+(106, 6, 'Babasaheb Udmale', 47.60, '2025-08-06'),
+(107, 7, 'Anil Chavan', 21.40, '2025-08-07'),
+(108, 8, 'Somnath Mane', 39.95, '2025-08-08');
+
+
+select * from Restaurant;
+
+select * from Orders;
+
+
+1. select Restaurant.rest_name,Orders.order_id FROM Restaurant INNER JOIN Orders ON Restaurant.rest_id = Orders.rest_id;
+
+2.select Restaurant.rest_name,Orders.amount FROM Restaurant INNER JOIN Orders ON Restaurant.rest_id = Orders.rest_id;
+
+3.SELECT Restaurant.rest_id,Restaurant.rest_name
+FROM Restaurant
+JOIN Orders ON Restaurant.rest_id = Orders.rest_id
+WHERE Restaurant.Location = 'Mumbai';
+
+4.SELECT SUM(amount) FROM Orders;
+
+5. SELECT Restaurant.rest_id, Restaurant.rest_name, Restaurant.Location FROM Restaurant LEFT JOIN Orders  ON Restaurant.rest_id = Orders.rest_id WHERE Orders.order_id IS NULL;
+
+6. select Restaurant.rest_name,Orders.cust_name FROM Restaurant INNER JOIN Orders ON Restaurant.rest_id = Orders.rest_id
+
+7. select * FROM Restaurant RIGHT JOIN Orders ON Restaurant.rest_id = Orders.rest_id;
+
+
+
+
+
+                                                   TASK 11
+
+
+CREATE TABLE department (dept_id INT PRIMARY KEY,dept_name VARCHAR(100));
+
+INSERT INTO department (dept_id, dept_name) VALUES
+(101, 'Veena Trivedi'),
+(102, 'Pravin Adivarekar'),
+(103, 'Shriganesh Yadav'),
+(104, 'Samiksha Bhise'),
+(105, 'Samta Deore');
+
+ CREATE TABLE employe (emp_id INT PRIMARY KEY,emp_name VARCHAR(50),dept_id INT,FOREIGN KEY (dept_id) REFERENCES department(dept_id));
+
+INSERT INTO employe (emp_id, emp_name, dept_id) VALUES
+(101, 'Vinay Sharma', 101),
+(102, 'Karan Gupta', 102),
+(103, 'Prem Singh', 103),
+(104, 'Pranjal Desai', 104),
+(105, 'Ram Rathod', 105);
+
+
+1.SELECT emp_id, emp_name, dept_name FROM employe JOIN department  ON department.dept_id = employe.dept_id;
+2.SELECT emp_id, emp_name, dept_name FROM employe LEFT JOIN department  ON employe.dept_id = department.dept_id;
+3.SELECT dept_id,dept_name,emp_id,emp_name FROM department LEFT JOIN employe e ON department.dept_id = employe.dept_id;
+4.SELECT emp_id, emp_name FROM employe LEFT JOIN  department d ON employe.dept_id = department.dept_id WHERE dept_id IS NULL;
+5.SELECT dept_id,dept_name FROM  department LEFT JOIN employe e ON department.dept_id = employe.dept_id WHERE emp_id IS NULL;
+
+
+
+                                                   TASK 12
+
+CREATE table Students(stu_id INT,stud_name VARCHAR(30) NOT NULL,AGE INT, FOREIGN KEY(Inst_id) REFERENCES Students(Inst_id),Course VARCHAR(40));
+
+CRAETE table Institute(Inst_id INT PRIMARY KEY,Inst_name VARCHAR(30),City VARCHAR(30));
+
+INSERT INTO Students (stud_id, stud_name, AGE, Inst_id, Course) VALUES
+(1, 'Jaya Gupta', 20, 101, 'Computer Science'),
+(2, 'John Rayan', 22, 102, 'Mechanical Engineering'),
+(3, 'Anshuman Raizada', 21, 103, 'Electrical Engineering'),
+(4, 'Tanaya Lokhande', 23, 101, 'Biotechnology'),
+(5, 'Yogini Dhumal', 24, 104, 'Civil Engineering'),
+(6, 'Sanket More', 22, 105, 'Mathematics'),
+(7, 'Jayesh Awhad', 25, NULL, 'Physics'),
+(8, 'Ashish Shirkar', 23, 102, 'Chemical Engineering'),
+(9, 'Vivek Gupta', 21, 101, 'Environmental Science'),
+(10, 'Akshay Yevale', 22, NULL, 'Architecture');
+
+
+INSERT INTO Institute (Inst_id, Inst_name, City) VALUES
+(101, 'Tech University', 'Mumbai'),
+(102, 'Engineering Institute', 'San Francisco'),
+(103, 'Greenfield University', 'Los Angeles'),
+(104, 'Global Institute of Technology', NULL),
+(105, 'Science and Arts College', 'Boston'),
+(106, 'AP Engineering College', 'Austin'),
+(107, 'Institute of Management', 'Miami'),
+(108, 'National University', 'Seattle'),
+(109, NULL, 'Dallas'),
+(110, 'Metropolitan University', 'Denver');
+
+
+SELECT Students.stud_id, Students.stud_name, Institute.Inst_name
+FROM Students
+INNER JOIN Institute ON Students.Inst_id = Institute.Inst_id;
+
+SELECT Students.stud_id, Students.stud_name,  COALESCE(Institute.Inst_name, 'Not Assigned') AS Inst_name
+FROM Students LEFT JOIN Institute ON Students.Inst_id = Institute.Inst_id;
+
+
+SELECT Students.stud_id,Students.stud_name,Institute.Inst_id,Institute.Inst_name
+FROM Students
+LEFT JOIN Institute ON Students.Inst_id = Institute.Inst_id
+UNION
+SELECT Students.stud_id,Students.stud_name, Institute.Inst_id, Institute.Inst_name
+FROM Institute
+RIGHT JOIN Students ON Students.Inst_id = Institute.Inst_id;
+
+
+SELECT Students.stud_name, Students.Course, Institute.Inst_name
+FROM Students
+JOIN Institute ON Students.Inst_id = Institute.Inst_id
+WHERE Institute.City = 'Mumbai';
+
+
+
+                                               TASK 13
+
+CREATE table Customers(cust_id INT PRIMARY KEY,cust_name VARCHAR(30),CITY VARCHAR(40));
+
+ CREATE table Bank(account_id INT,cust_id INT,bank_name VARCHAR(30),balance DECIMAL(10,2),FOREIGN KEY(cust_id) REFERENCES Customers(cust_id));
+
+
+
+INSERT INTO Customers (cust_id, cust_name, CITY) VALUES(1, 'Ariba Shaikh', 'Mumbai'),(2, 'Shafaque Sayyed', 'Nagpur'),(3, 'Kiran Deshpande', 'Aurangabad'),(4, 'Neha Deshmukh', 'Pune'),(5, 'Sanchit Patil','Karad'),(6, 'Pravesh Yadav','Satara'),(7, 'Vaibhav Yavalkar', 'Pune'),(8, 'Mustafa Shaikh', 'Kolhapur');
+
+INSERT INTO Bank (account_id, cust_id, bank_name,balance) VALUES
+(1001, 1, 'Bank of Maharashtra', 45000.75),
+(1002, 2, 'State Bank of India', 32000.00),
+(1003, 3, 'Bank of India', 27500.50),
+(1004, 4, 'GP Parsik Bank', 52000.00),
+(1005, 5, 'Union Bank of India', 38000.40),
+(1006, 6, 'Canara Bank', 41000.10),
+(1007, 7, 'Punjab National Bank', 21000.00),
+(1008, 8, 'Bank of Baroda', 39000.60);
+
+
+
+1.SELECT * FROM CustomersLEFT JOIN Bank ON Customer.cust_id = Bank.cust_id;
+
+2. SELECT Customers.cust_id,Customers.cust_name,Customers.CITY,Bank.account_id, Bank.balance FROM Customers LEFT JOIN Bank  ON Customers.cust_id = Bank.cust_id;
+
+
+3. SELECT Customers.cust_id,Customers.cust_name,Bank.account_id,Bank.bank_name,Bank.balance FROM Customers JOIN Bank ON Customers.cust_id = Bank.cust_id WHERE Customers.CITY = 'Pune';
+
+4.SELECT Customers.cust_id, Customers.cust_name, Customers.CITY FROM Customers LEFT JOIN Bank ON Customers.cust_id = Bank.cust_id WHERE Bank.account_id IS NULL;
+
+
+5.SELECT Bank.account_id,Customers.cust_name FROM Bank INNER JOIN Customers ON Bank.cust_id = Customers.cust_id;
+
+6.SELECT Customers.cust_id,Customers.cust_name,Customers.CITY,Bank.account_id,Bank.bank_name,Bank.balance FROM Customers JOIN Bank ON Customers.cust_id = Bank.cust_id WHERE Bank.balance > 50000;
+
+     
+                                                             TASK 14
+
+CREATE table Student(stud_id INT PRIMARY KEY,name VARCHAR(50),department VARCHAR(30), gender VARCHAR(10),age INT , marks INT);
+
+INSERT INTO Student (stud_id, name, department, gender, age, marks) VALUES
+(1, 'swarit mahajan', 'computer','Male',20,80),
+(2, 'kajal sharma', 'Mechanical','Female',22,60),
+(3, 'Jayesh yogi', 'civil','Male',25,85),
+(4, 'sharayu kadam', 'Electrical','Female',28,70),
+(5, 'sujit pawar', 'computer','Male',21,90),
+(6, 'Rajat gupta', 'Data Science','Male',20,80),
+(7, 'swarangini Pawar', 'AIML','Female',29,92),
+(8, 'David Dhawan', 'AIDS','Male',30,95);
+
+1.select department,count(*) as student_count from Student group by department;
+2. select department,avg(marks) as student_marks from Student group by department;
+3.select department,count(gender='Male') as gender_count,count(gender='Female') as female_count from Student group by department;
+4.select department,max(marks) as student_marks from Student group by department;
+5.select department,gender,avg(age) as student_age from Student group by department,gender;
+6.select department,sum(marks) as student_marks from Student group by department;
+7.select gender,min(marks) as student_marks from Student group by gender;
+8.SELECT age, COUNT(*) AS student_age FROM Student GROUP BY age;
+9.SELECT department, COUNT(*) AS student_count,avg(marks) AS student_marks FROM Student GROUP BY  department;
+10.SELECT department,age, COUNT(*) AS student_count  FROM Student GROUP BY  department,age;
+
+
+
+                                                        TASK 15 
+
+CREATE table Employees(emp_id INT PRIMARY KEY,name VARCHAR(50),department VARCHAR(30),salary INT,age INT,gender VARCHAR(50),City VARCHAR(30));
+
+INSERT INTO Employees (emp_id, name, department, salary, age, gender, city) VALUES
+(1, 'Amit Sharma', 'HR', 78000, 28, 'Male', 'Delhi'),
+(2, 'Priya Singh', 'IT', 65000, 26, 'Female', 'Mumbai'),
+(3, 'Ravi Mehta', 'Finance', 25000, 32, 'Male', 'Bangalore'),
+(4, 'Kiran Rao', 'IT', 70000, 29, 'Female', 'Hyderabad'),
+(5, 'Manish Patel', 'Sales', 48000, 31, 'Male', 'Ahmedabad'),
+(6, 'Neha Verma', 'HR', 46000, 23, 'Female', 'Delhi'),
+(7, 'Rahul Yadav', 'IT', 72000, 35, 'Male', 'Pune'),
+(8, 'Sneha Kapoor', 'Finance', 53000, 30, 'Female', 'Chennai'),
+(9, 'Ankit Desai', 'Marketing', 35000, 28, 'Male', 'Surat'),
+(10, 'Deepa Nair', 'HR', 47000, 21, 'Female', 'Kochi');
+
+1.select * from Employees where department = 'IT' AND salary > 50000;
+2. select * from Employees where City = 'Mumbai' OR City ='Delhi';
+3.select * from Employees where NOT department='HR';
+4.select * from Employees where department='Finance' XOR salary >40000;
+5.select * from Employees where department='Sales' AND (salary > 30000 OR age <25);
+6. select * from Employees where NOT City='Pune' AND salary > 35000;
+7.select * from Employees where department='IT' OR NOT department='Finance';
+8.select * from Employees where (gender='Male' XOR (salary>60000 AND department='HR'));ss
+9.select * from Employees where (age >30 AND (department='IT'OR department='Finance'));
+10.select * from Employees where NOT City='Delhi' XOR salary <25000;
+
+                                              TASK 16
+
+
+
+1.SELECT EmployeeName, Salary FROM Employees WHERE Salary = (SELECT MAX(Salary) FROM Employees);
+
+2.SELECT StudentName, Marks FROM Students WHERE Marks > (SELECT AVG(Marks) FROM Students);
+
+3.SELECT EmployeeName, Department FROM Employees WHERE Department = (SELECT Department FROM Employees WHERE EmployeeName = 'John');
+
+4.SELECT ProductName, Price FROM Products WHERE Price > (SELECT Price FROM Products WHERE ProductName = 'X');
+
+                                                TASK 17
+
+1. SELECT MAX(Salary) AS SecondHighestSalary FROM Employees WHERE Salary < (SELECT MAX(Salary) FROM Employees);
+
+2.SELECT DepartmentID FROM Employees GROUP BY DepartmentID HAVING COUNT(*) > (SELECT AVG(DeptCount)FROM (SELECT COUNT(*) AS DeptCount FROM Employees GROUP BY DepartmentID ) AS DeptCounts);
+
+3.SELECT StudentName, Subject, Score FROM Marks m1 WHERE Score = (SELECT MAX(Score) FROM Marks m2 WHERE m2.Subject = m1.Subject);
+
+4.SELECT DISTINCT CustomerID FROM Orders WHERE TotalAmount > (SELECT AVG(TotalAmount) FROM Orders);
+
+                                                   
+                                                                TASK 18
+
+1.DELIMITER //
+
+CREATE PROCEDURE GetEmployeesByDepartment(
+    IN dept_name VARCHAR(50)
+)
+BEGIN
+    SELECT EmployeeID, EmployeeName, DepartmentName
+    FROM Employees
+    WHERE DepartmentName = dept_name;
+END //
+
+DELIMITER ;
+
+
+CALL GetEmployeesByDepartment('Sales');
+
+
+2.DELIMITER //
+
+CREATE PROCEDURE GetOrdersAfterDate(
+    IN given_date DATE
+)
+BEGIN
+    SELECT OrderID, CustomerID, OrderDate, TotalAmount
+    FROM Orders
+    WHERE OrderDate > given_date;
+END //
+
+DELIMITER ;
+
+CALL GetOrdersAfterDate('2023-01-01');
+                                                                        
+
+                                                                           TASK 19
+
+1.DELIMITER //
+
+CREATE PROCEDURE GetMaxSalary(
+    OUT max_salary DECIMAL(10,2)
+)
+BEGIN
+    SELECT MAX(Salary) INTO max_salary
+    FROM Employees;
+END //
+
+DELIMITER ;
+
+
+SET @max_salary = 0;
+CALL GetMaxSalary(@max_salary);
+SELECT @max_salary;
+
+
+2.DELIMITER //
+
+CREATE PROCEDURE CountTotalStudents(
+    OUT total_students INT
+)
+BEGIN
+    SELECT COUNT(*) INTO total_students
+    FROM Students;
+END //
+
+DELIMITER ;
+
+
+SET @total_students = 0;
+CALL CountTotalStudents(@total_students);
+SELECT @total_students;
+
+                                                                  TASK 20
+
+1.DELIMITER //
+
+CREATE PROCEDURE IncreaseSalary(
+    INOUT salary DECIMAL(10,2),
+    IN percentage DECIMAL(5,2)
+)
+BEGIN
+    SET salary = salary + (salary * percentage / 100);
+END //
+
+DELIMITER ;
+
+
+SET @current_salary = 50000;
+CALL IncreaseSalary(@current_salary, 10);
+SELECT @current_salary;  
+
+2.DELIMITER //
+
+CREATE PROCEDURE CheckMarksStatus(
+    INOUT marks_status VARCHAR(10)
+)
+BEGIN
+    IF CAST(marks_status AS UNSIGNED) >= 40 THEN
+        SET marks_status = 'Pass';
+    ELSE
+        SET marks_status = 'Fail';
+    END IF;
+END //
+
+DELIMITER ;
+
+
+SET @status = '38';
+CALL CheckMarksStatus(@status);
+SELECT @status;
+
+                                                                  TASK 21
+
+
+select employee.*,
+CASE
+when salary>22000 then
+	salary*0.2
+when salary >10000 and salary<22000 then
+	salary*0.1
+else
+	salary*00.5
+end as bonus
+from employee;
+
+
+                                                                  TASK 22
+
+delimiter //
+create procedure checkGap(in age int)
+begin
+if age<13 then select "Child";
+else if age<19 then select "Teenager";
+else if age<60 then select "Adult";
+else select "Senior Citizen";
+end if;
+end if;
+end if;
+end //
+delimiter ;
+
+call checkGap(90);
+
+
+
+                                                                  TASK 23
+
+delimiter //
+create procedure checkPrice(in unit int)
+begin
+	if unit <=100 then select unit*5;
+    else if unit <=300 then select unit*7;
+    else select unit*10;
+    end if;
+    end if;
+end //
+delimiter ;
+
+call checkPrice(299);
+
+
+                                                                  TASK 24
+delimiter //
+create procedure checkSignal(in sig varchar(100))
+begin
+	CASE sig
+when "R" then select "STOP";
+when "Y" then select "WAIT";
+when "G" then select "GO";
+else select "Invalid Signal";
+end case;
+end //
+delimiter ;
+
+call checkSignal("R"
+
+
+
+                                                                  TASK 25
+
+1.SELECT * FROM customer WHERE name LIKE 'A%';
+2.SELECT * FROM customer WHERE city LIKE '%pur';
+3.SELECT * FROM customer WHERE email LIKE '%gmail%';
+4.SELECT * FROM customer WHERE name LIKE '%an%';
+5.SELECT * FROM customer WHERE phone LIKE '98%';
+6.SELECT * FROM customer WHERE name LIKE '__';  
+7.SELECT * FROM customer WHERE city LIKE '_a%';
+
+                                                                   TASK 26
+
+DELIMITER //
+
+CREATE PROCEDURE PrintNumbers()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+
+    simple_loop: LOOP
+        SELECT i AS Number;
+        SET i = i + 1;
+        
+        IF i > 10 THEN
+            LEAVE simple_loop;
+        END IF;
+    END LOOP simple_loop;
+END;
+//
+
+DELIMITER ;
+
+CALL PrintNumbers();
+
+                                                                     TASK 27
+
+
+DELIMITER //
+
+CREATE PROCEDURE PrintAddition()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    DECLARE total INT DEFAULT 0;
+
+    WHILE i <= 10 DO
+        SET total = total + i;
+        SELECT CONCAT('Sum after adding ', i, ' is ', total) AS RunningTotal;
+        SET i = i + 1;
+    END WHILE;
+END;
+//
+
+DELIMITER ;
+
+CALL PrintAddition();
+
+
+
+                                                                   TASK 28
+
+DELIMITER //
+CREATE PROCEDURE printsquare( in num INT)
+BEGIN
+	DECLARE i INT DEFAULT 1;
+	DECLARE allnumber VARCHAR(255) DEFAULT '';
+	
+    lbl: REPEAT
+			SET allnumber  = concat(allnumber,i*i,",");
+			SET i= i+1;
+            UNTIL i> num
+            
+    END REPEAT lbl;
+SELECT allnumber AS square;
+END//
+DELIMITER ;
+
+DROP PROCEDURE printsquare;
+CALL printsquare(10);
+
+                                                                    TASK 30
+
+DELIMITER //
+CREATE PROCEDURE printEVEN( in num INT)
+BEGIN
+	DECLARE i INT DEFAULT 1;
+	DECLARE allEven VARCHAR(255) DEFAULT '';
+    DECLARE e INT DEFAULT 1;
+	
+    lbl: REPEAT
+		IF i%2=0 THEN SELECT i INTO e;
+			SET allEven  = concat(allEven, e,",");
+			
+            END IF;
+            SET i= i+1;
+            UNTIL i> num
+            
+    END REPEAT lbl;
+SELECT allEven AS Even;
+END//
+DELIMITER ;
+
+DROP PROCEDURE printEven;
+CALL printEven(30);
+                                                              TASK 31
+
+DELIMITER //
+
+CREATE PROCEDURE printODD(IN num INT)
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    DECLARE allOdd VARCHAR(255) DEFAULT '';
+    DECLARE o INT DEFAULT 1;
+
+    lbl: REPEAT
+        IF i % 2 != 0 THEN
+            SELECT i INTO o;
+            SET allOdd = CONCAT(allOdd, o, ",");
+        END IF;
+        SET i = i + 1;
+        UNTIL i > num
+    END REPEAT lbl;
+
+    SELECT allOdd AS Odd;
+END//
+
+DELIMITER ;
+
+
+CALL printodd(30);
+                                                                TASK 32
+
+DELIMITER //
+
+CREATE PROCEDURE priReverse(IN num INT)
+BEGIN
+    DECLARE i int DEFAULT 20;
+    DECLARE output VARCHAR(200) DEFAULT '';
+    SET i = num;
+
+    lbl: WHILE i >= 1 DO
+     SET output = CONCAT(output, i, ',','\n');
+        SELECT i;
+        SET i = i - 1;
+    END WHILE lbl;
+SELECT output AS priReverse;
+END//
+
+DELIMITER ;
+CALL priReverse(20);
+                                                                   TASK 33
+
+
+
+DELIMITER //
+CREATE PROCEDURE eight(IN num INT)
+BEGIN
+	DECLARE i INT DEFAULT 1;
+	DECLARE table1 INT DEFAULT 1;
+    
+	
+    lbl: WHILE i <=num DO
+			SET table1= i*8;
+            SET table1=concat(table1,',');
+			SET i= i+1;
+    END WHILE lbl;
+SELECT table1;
+END//
+DELIMITER ;
+DROP PROCEDURE eight;
+CALL eight(10);
+
+
+
+
+                                                                    TASK 34
+
+DELIMITER //
+
+CREATE PROCEDURE PrintCubes()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    WHILE i <= 20 DO
+        SELECT CONCAT('Number: ', i, ' Cube: ', POW(i, 3)) AS Result;
+        SET i = i + 1;
+    END WHILE;
+END;
+//
+
+DELIMITER ;
+
+CALL PrintCubes();
+
+                                                                    TASK 35
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE CalculateFactorial(IN n INT)
+BEGIN
+    DECLARE result BIGINT DEFAULT 1;
+    DECLARE i INT DEFAULT 1;
+
+    IF n < 0 THEN
+        SELECT 'Factorial is not defined for negative numbers' AS Message;
+    ELSE
+        WHILE i <= n DO
+            SET result = result * i;
+            SET i = i + 1;
+        END WHILE;
+        SELECT CONCAT('Factorial of ', n, ' is ', result) AS Result;
+    END IF;
+END;
+//
+
+DELIMITER ;
+
+CALL CalculateFactorial(5);
+
+                                                                    TASK 36
+
+
+DELIMITER //
+
+CREATE PROCEDURE PrintFibonacci()
+BEGIN
+    DECLARE a INT DEFAULT 0;
+    DECLARE b INT DEFAULT 1;
+    DECLARE temp INT;
+    DECLARE count INT DEFAULT 1;
+
+    REPEAT
+        SELECT CONCAT('Term ', count, ': ', a) AS FibonacciTerm;
+        SET temp = a + b;
+        SET a = b;
+        SET b = temp;
+        SET count = count + 1;
+    UNTIL count > 10
+    END REPEAT;
+END;
+//
+
+DELIMITER ;
+
+CALL PrintFibonacci();
+
+
+
+
+
+                                                                    TASK 37
+1.SELECT UPPER(employee_name) AS employee_name_upper FROM employees;
+2.SELECT LOWER(job_title) AS job_title_lower FROM employees;
+3.SELECT employee_name, LENGTH(employee_name) AS name_length FROM employees;
+4.SELECT CONCAT(employee_name,'-', job_title) AS name_with_title FROM employees;
+5.SELECT SUBSTR(employee_name, 1, 4) AS first_four_chars FROM employees;
+6.SELECT department_name, SUBSTR(department_name, 1, 3) AS first_3_chars, SUBSTR(department_name, -3) AS last_3_chars FROM employees;
+7.SELECT REPLACE(job_title, 'Developer', 'Software Engineer') AS updated_title FROM employees;
+8.SELECT email, INSTR(email, '@') AS at_position FROM employees;
+9.SELECT employee_name, REPLACE(employee_name,' ','') AS name_no_spaces FROM employees;
+
+                                                                      TASK 37
+
+1.SELECT employee_name, ABS(salary - 40000) AS abs_diff FROM employees;
+2.SELECT employee_name, ROUND(salary, -3) AS salary_rounded_thousand FROM employees;
+3.SELECT employee_name, CEIL(salary) AS salary_ceil FROM employees;
+4.SELECT employee_name, FLOOR(salary) AS salary_floor FROM employees;
+5.SELECT employee_name, MOD(salary, 5000) AS remainder FROM employees;
+6.SELECT employee_name, POW(salary, 2) AS salary_square FROM employees;
+7.SELECT employee_name, SQRT(salary) AS salary_sqrt FROM employees;
+8.SELECT employee_name,
+      CASE
+         WHEN salary > 0 THEN 'Positive'
+         WHEN salary < 0 THEN 'Negative'
+         ELSE 'Zero'
+       END AS salary_status
+FROM employees;
+9.SELECT employee_name, TRUNCATE(salary, 2) AS salary_truncated
+FROM employees;
+
+                                                                       TASK 38
+
+1.SELECT CURDATE() AS current_date;
+2.SELECT NOW() AS current_date_time;
+3.SELECT employee_name, YEAR(hire_date) AS join_year
+4.SELECT employee_name,MONTH(hire_date) AS join_month_number, MONTHNAME(hire_date) AS join_month_name FROM employees;
+5.SELECT employee_name,DAY(hire_date) AS join_day_number,DAYNAME(hire_date) AS join_day_name FROM employees;
+6.SELECT employee_name,DATEDIFF(CURDATE(), hire_date) AS days_worked FROM employees;
+7.SELECT employee_name,TIMESTAMPDIFF(YEAR, hire_date, CURDATE()) AS years_worked FROM employees
+8.SELECT employee_name, LAST_DAY(hire_date) AS last_day_of_hire_month FROM employees;
+
+                                                                          TASK 39
+
+use projectdatabase
+
+db.students.insertMany([
+  {
+    stdid: 1,
+    stdname: "Swapnil Rathod",
+    stdcontact: "9892649590",
+    stdgender: "Male",
+    stdage: 22,
+    stdaddress: "Kalwa",
+    stdgrade: "A"
+  },
+  {
+    stdid: 2,
+    stdname: "Prathamesh Babar",
+    stdcontact: "9075634562",
+    stdgender: "Male",
+    stdage: 21,
+    stdaddress: "Mulund",
+    stdgrade: "B"
+  },
+  {
+    stdid: 3,
+    stdname: "Aditi Yadav",
+    stdcontact: "9873245421",
+    stdgender: "Female",
+    stdage: 19,
+    stdaddress: "Ulhasnagar",
+    stdgrade: "A"
+  },
+  {
+    stdid: 4,
+    stdname: "Janvi Sharma",
+    stdcontact: "8745554567",
+    stdgender: "Female",
+    stdage: 22,
+    stdaddress: "Digha",
+    stdgrade: "C"
+  },
+  {
+    stdid: 5,
+    stdname: "Khushi Chhoker ",
+    stdcontact: "8765555678",
+    stdgender: "Female",
+    stdage: 20,
+    stdaddress: "Thane",
+    stdgrade: "B"
+  },
+  {
+    stdid: 6,
+    stdname: "Farukh Shaikh",
+    stdcontact: "9835556789",
+    stdgender: "Male",
+    stdage: 23,
+    stdaddress: "Nahur",
+    stdgrade: "A"
+  },
+  {
+    stdid: 7,
+    stdname: "Veena Sharma",
+    stdcontact: "7655557890",
+    stdgender: "Female",
+    stdage: 21,
+    stdaddress: "Bhandup",
+    stdgrade: "B"
+  },
+  {
+    stdid: 8,
+    stdname: "Himanshu Bhaije",
+    stdcontact: "9898765536",
+    stdgender: "Male",
+    stdage: 22,
+    stdaddress: "Kurla",
+    stdgrade: "C"
+  },
+  {
+    stdid: 9,
+    stdname: "Zuweriya Mulani",
+    stdcontact: "9087675559",
+    stdgender: "Female",
+    stdage: 20,
+    stdaddress: "Wadala",
+    stdgrade: "A"
+  },
+  {
+    stdid: 10,
+    stdname: "Jackie Shroff",
+    stdcontact:"9891645825",
+    stdgender: "Male",
+    stdage: 19,
+    stdaddress: "Santacruz",
+    stdgrade: "B"
+  }
+]);
+
+                                                                          TASK 40
+
+1.db.createCollection("products")
+
+2.db.products.insertMany([
+  { pid: 1, pname: "Laptop", pprice: 1200, pcompany: "Dell", pmodel: "XPS13", availablestatus: true, pquantity: 50 },
+  { pid: 2, pname: "Smartphone", pprice: 800, pcompany: "Samsung", pmodel: "Galaxy S21", availablestatus: true, pquantity: 100 },
+  { pid: 3, pname: "Tablet", pprice: 400, pcompany: "Apple", pmodel: "iPad", availablestatus: true, pquantity: 30 },
+  { pid: 4, pname: "Monitor", pprice: 200, pcompany: "LG", pmodel: "UltraWide", availablestatus: false, pquantity: 0 },
+  { pid: 5, pname: "Mouse", pprice: 25, pcompany: "Logitech", pmodel: "M220", availablestatus: true, pquantity: 200 },
+  { pid: 6, pname: "Keyboard", pprice: 45, pcompany: "Logitech", pmodel: "K120", availablestatus: true, pquantity: 180 },
+  { pid: 7, pname: "Speaker", pprice: 70, pcompany: "JBL", pmodel: "Go 3", availablestatus: true, pquantity: 75 },
+  { pid: 8, pname: "Printer", pprice: 150, pcompany: "HP", pmodel: "LaserJet", availablestatus: true, pquantity: 25 },
+  { pid: 9, pname: "Webcam", pprice: 90, pcompany: "Logitech", pmodel: "C920", availablestatus: true, pquantity: 60 },
+  { pid: 10, pname: "Router", pprice: 60, pcompany: "TP-Link", pmodel: "Archer A6", availablestatus: true, pquantity: 40 }
+])
+
+3.db.products.find().pretty()
+
+4.db.products.find().sort({pid: -1}).limit(3).pretty()
+
+5.db.products.find().sort({pid: 1}).limit(2).pretty()
+
+6.db.products.updateOne(
+  { pid: 8 },
+  { $set: { pprice: 170, pquantity: 35 } }
+)
+
+7.db.products.insertOne({
+  pid: 11,
+  pname: "Smartwatch",
+  pprice: 250,
+  pcompany: "Apple",
+  pmodel: "Watch SE",
+  availablestatus: true,
+  pquantity: 15
+})
+
+8.db.products.deleteOne({ pid: 9 })
+
+9.db.products.drop()
+
+10.db.dropDatabase()
+
+
