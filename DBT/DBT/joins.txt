@@ -1,0 +1,392 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databeses;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databeses' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bank               |
+| bollywood          |
+| cdac               |
+| course_management  |
+| ecommerce          |
+| hollywood          |
+| information_schema |
+| management         |
+| mysql              |
+| nishant            |
+| paypark            |
+| performance_schema |
+| persistent_store   |
+| sakila             |
+| sys                |
+| webjava            |
+| world              |
+| zomato             |
++--------------------+
+18 rows in set (0.06 sec)
+
+mysql> use bank
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_bank |
++----------------+
+| account        |
+| course         |
+| customer       |
+| enrollment     |
+| loan           |
+| student        |
+| transaction    |
++----------------+
+7 rows in set (0.02 sec)
+
+mysql> create database MycompanyDB;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use mycompanydb;
+Database changed
+mysql> create table department(D_id int primary key, Dpt_code varchar(30) not null, D_name varchar(50) not null ,D_location enum('mumbai','pune','delhi') );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc department;
++------------+-------------------------------+------+-----+---------+-------+
+| Field      | Type                          | Null | Key | Default | Extra |
++------------+-------------------------------+------+-----+---------+-------+
+| D_id       | int                           | NO   | PRI | NULL    |       |
+| Dpt_code   | varchar(30)                   | NO   |     | NULL    |       |
+| D_name     | varchar(50)                   | NO   |     | NULL    |       |
+| D_location | enum('mumbai','pune','delhi') | YES  |     | NULL    |       |
++------------+-------------------------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into department values (1, 101, IT );
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into department values (1, 101, IT, mumbai );
+ERROR 1054 (42S22): Unknown column 'IT' in 'field list'
+mysql> insert into department values (1, 101, 'IT', 'mumbai' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from department;
++------+----------+--------+------------+
+| D_id | Dpt_code | D_name | D_location |
++------+----------+--------+------------+
+|    1 | 101      | IT     | mumbai     |
++------+----------+--------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into department values (2, 102, 'HR', 'patna' );
+ERROR 1265 (01000): Data truncated for column 'D_location' at row 1
+mysql> insert into department values (2, 102, 'HR', 'pune' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from department;
++------+----------+--------+------------+
+| D_id | Dpt_code | D_name | D_location |
++------+----------+--------+------------+
+|    1 | 101      | IT     | mumbai     |
+|    2 | 102      | HR     | pune       |
++------+----------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into department values (3, 105, 'IT', 'chennai' );
+ERROR 1265 (01000): Data truncated for column 'D_location' at row 1
+mysql> insert into department values (3, 105, 'IT',  );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> insert into department values (3, 103, 'IT', 'delhi' );
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from department;
++------+----------+--------+------------+
+| D_id | Dpt_code | D_name | D_location |
++------+----------+--------+------------+
+|    1 | 101      | IT     | mumbai     |
+|    2 | 102      | HR     | pune       |
+|    3 | 103      | IT     | delhi      |
++------+----------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE delivery MODIFY D_location ENUM('Chennai', 'Delhi', 'Mumbai', 'Kolkata', 'Bangalore');
+ERROR 1146 (42S02): Table 'mycompanydb.delivery' doesn't exist
+mysql> ALTER TABLE department MODIFY D_location ENUM('Chennai', 'Delhi', 'Mumbai', 'Kolkata', 'Bangalore');
+ERROR 1265 (01000): Data truncated for column 'D_location' at row 2
+mysql> insert into department values (4, 104, 'marketing', 'delhi' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department values (5, 105, 'finance', 'mumbai' );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from department;
++------+----------+-----------+------------+
+| D_id | Dpt_code | D_name    | D_location |
++------+----------+-----------+------------+
+|    1 | 101      | IT        | mumbai     |
+|    2 | 102      | HR        | pune       |
+|    3 | 103      | IT        | delhi      |
+|    4 | 104      | marketing | delhi      |
+|    5 | 105      | finance   | mumbai     |
++------+----------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> create table employee;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table employee(emp_id int PRIMARY KEY,emp_name varchar(50) not null, emp_code varchar(25) not null, gender enum('male', 'female','transgen','other') not null,emp_DOB DATE not null,emp_DOJ DATETIME not null, Emp_salary decimal(10,2) not null,Work_time TIME not null, emp_rating float
+ not null,is_active boolean default true not null, Profile_Picture blob, foreign key (D_id) refrences department(D_id) );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'refrences department(D_id) )' at line 1
+mysql> create table employee(emp_id int PRIMARY KEY,emp_name varchar(50) not null, emp_code varchar(25) not null, gender enum('male', 'female','transgen','other') not null,emp_DOB DATE not null,emp_DOJ DATETIME not null, Emp_salary decimal(10,2) not null,Work_time TIME not null, emp_rating float not null,is_active boolean default true not null, Profile_Picture blob,D_id int,foreign key (D_id) refrences department(D_id) );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'refrences department(D_id) )' at line 1
+mysql> create table employee(emp_id int PRIMARY KEY,emp_name varchar(50) not null, emp_code varchar(25) not null, gender enum('male', 'female','transgen','other') not null,emp_DOB DATE not null,emp_DOJ DATETIME not null, Emp_salary decimal(10,2) not null,Work_time TIME not null, emp_rating float not null,is_active boolean default true not null, Profile_Picture blob,D_id int,foreign key D_id refrences department(D_id) );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'refrences department(D_id) )' at line 1
+mysql> create table employee(emp_id int PRIMARY KEY,emp_name varchar(50) not null, emp_code varchar(25) not null, gender enum('male', 'female','transgen','other') not null,emp_DOB DATE not null,emp_DOJ DATETIME not null, Emp_salary decimal(10,2) not null,Work_time TIME not null, emp_rating float not null,is_active boolean default true not null, Profile_Picture blob,D_id int,foreign key (D_id) references department(D_id) );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> desc employee
+    -> ;
++-----------------+------------------------------------------+------+-----+---------+-------+
+| Field           | Type                                     | Null | Key | Default | Extra |
++-----------------+------------------------------------------+------+-----+---------+-------+
+| emp_id          | int                                      | NO   | PRI | NULL    |       |
+| emp_name        | varchar(50)                              | NO   |     | NULL    |       |
+| emp_code        | varchar(25)                              | NO   |     | NULL    |       |
+| gender          | enum('male','female','transgen','other') | NO   |     | NULL    |       |
+| emp_DOB         | date                                     | NO   |     | NULL    |       |
+| emp_DOJ         | datetime                                 | NO   |     | NULL    |       |
+| Emp_salary      | decimal(10,2)                            | NO   |     | NULL    |       |
+| Work_time       | time                                     | NO   |     | NULL    |       |
+| emp_rating      | float                                    | NO   |     | NULL    |       |
+| is_active       | tinyint(1)                               | NO   |     | 1       |       |
+| Profile_Picture | blob                                     | YES  |     | NULL    |       |
+| D_id            | int                                      | YES  | MUL | NULL    |       |
++-----------------+------------------------------------------+------+-----+---------+-------+
+12 rows in set (0.00 sec)
+
+mysql> INSERT INTO employee (emp_id, emp_name, emp_code, gender, emp_DOB, emp_DOJ, Emp_salary, Work_time, emp_rating, is_active, D_id)
+    -> VALUES
+    -> (1, 'Aarav Sharma', 'EMP001', 'male', '1990-05-15', '2015-06-01 09:00:00', 65000.00, '09:00:00', 4.2, TRUE, 1),
+    ->
+    -> (2, 'Ananya Iyer', 'EMP002', 'female', '1992-08-25', '2016-07-15 09:30:00', 72000.00, '09:30:00', 4.6, TRUE, 2),
+    ->
+    -> (3, 'Rohan Desai', 'EMP003', 'male', '1988-02-10', '2014-05-20 08:45:00', 80000.00, '08:45:00', 4.8, TRUE, 1),
+    ->
+    -> (4, 'Priya Nair', 'EMP004', 'female', '1995-12-05', '2019-01-10 09:15:00', 56000.00, '09:15:00', 3.9, TRUE, 3),
+    ->
+    -> (5, 'Karan Mehta', 'EMP005', 'male', '1991-07-22', '2017-03-18 10:00:00', 67000.00, '10:00:00', 4.0, TRUE, 2),
+    ->
+    -> (6, 'Sneha Reddy', 'EMP006', 'female', '1993-11-11', '2018-02-05 09:00:00', 59000.00, '09:00:00', 4.3, TRUE, 3),
+    ->
+    -> (7, 'Vikram Singh', 'EMP007', 'male', '1987-01-30', '2013-04-22 08:30:00', 90000.00, '08:30:00', 4.9, TRUE, 1),
+    ->
+    -> (8, 'Meera Patil', 'EMP008', 'female', '1994-09-19', '2020-08-17 09:45:00', 54000.00, '09:45:00', 3.7, TRUE, 4),
+    ->
+    -> (9, 'Akhil Joshi', 'EMP009', 'male', '1996-04-12', '2021-06-30 10:15:00', 50000.00, '10:15:00', 3.8, TRUE, 2),
+    ->
+    -> (10, 'Tanya Verma', 'EMP010', 'female', '1990-03-08', '2012-10-10 08:00:00', 88000.00, '08:00:00', 4.5, TRUE, 1);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employee' at line 1
+mysql> select * from employee;
++--------+--------------+----------+--------+------------+---------------------+------------+-----------+------------+-----------+----------------------------------+------+
+| emp_id | emp_name     | emp_code | gender | emp_DOB    | emp_DOJ             | Emp_salary | Work_time | emp_rating | is_active | Profile_Picture                  | D_id |
++--------+--------------+----------+--------+------------+---------------------+------------+-----------+------------+-----------+----------------------------------+------+
+|      1 | Aarav Sharma | EMP001   | male   | 1990-05-15 | 2015-06-01 09:00:00 |   65000.00 | 09:00:00  |        4.2 |         1 | NULL
+                |    1 |
+|      2 | Ananya Iyer  | EMP002   | female | 1992-08-25 | 2016-07-15 09:30:00 |   72000.00 | 09:30:00  |        4.6 |         1 | NULL
+                |    2 |
+|      3 | Rohan Desai  | EMP003   | male   | 1988-02-10 | 2014-05-20 08:45:00 |   80000.00 | 08:45:00  |        4.8 |         1 | NULL
+                |    1 |
+|      4 | Priya Nair   | EMP004   | female | 1995-12-05 | 2019-01-10 09:15:00 |   56000.00 | 09:15:00  |        3.9 |         1 | NULL
+                |    3 |
+|      5 | Karan Mehta  | EMP005   | male   | 1991-07-22 | 2017-03-18 10:00:00 |   67000.00 | 10:00:00  |          4 |         1 | NULL
+                |    2 |
+|      6 | Sneha Reddy  | EMP006   | female | 1993-11-11 | 2018-02-05 09:00:00 |   59000.00 | 09:00:00  |        4.3 |         1 | NULL
+                |    3 |
+|      7 | Vikram Singh | EMP007   | male   | 1987-01-30 | 2013-04-22 08:30:00 |   90000.00 | 08:30:00  |        4.9 |         1 | NULL
+       select * from employee;
++--------+--------------+----------+--------+------------+---------------------+------------+-----------+------------+-----------+----------------------------------+------+
+| emp_id | emp_name     | emp_code | gender | emp_DOB    | emp_DOJ             | Emp_salary | Work_time | emp_rating | is_active | Profile_Picture                  | D_id |
++--------+--------------+----------+--------+------------+---------------------+------------+-----------+------------+-----------+----------------------------------+------+
+|      1 | Aarav Sharma | EMP001   | male   | 1990-05-15 | 2015-06-01 09:00:00 |   65000.00 | 09:00:00  |        4.2 |         1 | NULL                             |    1 |
+|      2 | Ananya Iyer  | EMP002   | female | 1992-08-25 | 2016-07-15 09:30:00 |   72000.00 | 09:30:00  |        4.6 |         1 | NULL                             |    2 |
+|      3 | Rohan Desai  | EMP003   | male   | 1988-02-10 | 2014-05-20 08:45:00 |   80000.00 | 08:45:00  |        4.8 |         1 | NULL                             |    1 |
+|      4 | Priya Nair   | EMP004   | female | 1995-12-05 | 2019-01-10 09:15:00 |   56000.00 | 09:15:00  |        3.9 |         1 | NULL                             |    3 |
+|      5 | Karan Mehta  | EMP005   | male   | 1991-07-22 | 2017-03-18 10:00:00 |   67000.00 | 10:00:00  |          4 |         1 | NULL                             |    2 |
+|      6 | Sneha Reddy  | EMP006   | female | 1993-11-11 | 2018-02-05 09:00:00 |   59000.00 | 09:00:00  |        4.3 |         1 | NULL                             |    3 |
+|      7 | Vikram Singh | EMP007   | male   | 1987-01-30 | 2013-04-22 08:30:00 |   90000.00 | 08:30:00  |        4.9 |         1 | NULL                             |    1 |
+|      8 | Meera Patil  | EMP008   | female | 1994-09-19 | 2020-08-17 09:45:00 |   54000.00 | 09:45:00  |        3.7 |         1 | NULL                             |    4 |
+|      9 | Akhil Joshi  | EMP009   | male   | 1996-04-12 | 2021-06-30 10:15:00 |   50000.00 | 10:15:00  |        3.8 |         1 | NULL                             |    2 |
+mysql> 0 | Tanya Verma  | EMP010   | female | 1990-03-08 | 2012-10-10 08:00:00 |   88000.00 | 08:00:00  |        4.5 |         1 | NULL                             |    1 |
+mysql> --+--------------+----------+--------+------------+---------------------+------------+-----------+------------+-----------+----------------------------------+------+
+mysql>  in set (0.00 sec)
+mysql>
+mysql>
+mysql>
+mysql> select * from employee;
++--------+--------------+----------+--------+------------+---------------------+------------+-----------+------------+-----------+----------------------------------+------+
+| emp_id | emp_name     | emp_code | gender | emp_DOB    | emp_DOJ             | Emp_salary | Work_time | emp_rating | is_active | Profile_Picture                  | D_id |
++--------+--------------+----------+--------+------------+---------------------+------------+-----------+------------+-----------+----------------------------------+------+
+|      1 | Aarav Sharma | EMP001   | male   | 1990-05-15 | 2015-06-01 09:00:00 |   65000.00 | 09:00:00  |        4.2 |         1 | NULL                             |    1 |
+|      2 | Ananya Iyer  | EMP002   | female | 1992-08-25 | 2016-07-15 09:30:00 |   72000.00 | 09:30:00  |        4.6 |         1 | NULL                             |    2 |
+|      3 | Rohan Desai  | EMP003   | male   | 1988-02-10 | 2014-05-20 08:45:00 |   80000.00 | 08:45:00  |        4.8 |         1 | NULL                             |    1 |
+|      4 | Priya Nair   | EMP004   | female | 1995-12-05 | 2019-01-10 09:15:00 |   56000.00 | 09:15:00  |        3.9 |         1 | NULL                             |    3 |
+|      5 | Karan Mehta  | EMP005   | male   | 1991-07-22 | 2017-03-18 10:00:00 |   67000.00 | 10:00:00  |          4 |         1 | NULL                             |    2 |
+|      6 | Sneha Reddy  | EMP006   | female | 1993-11-11 | 2018-02-05 09:00:00 |   59000.00 | 09:00:00  |        4.3 |         1 | NULL                             |    3 |
+|      7 | Vikram Singh | EMP007   | male   | 1987-01-30 | 2013-04-22 08:30:00 |   90000.00 | 08:30:00  |        4.9 |         1 | NULL                             |    1 |
+|      8 | Meera Patil  | EMP008   | female | 1994-09-19 | 2020-08-17 09:45:00 |   54000.00 | 09:45:00  |        3.7 |         1 | NULL                             |    4 |
+|      9 | Akhil Joshi  | EMP009   | male   | 1996-04-12 | 2021-06-30 10:15:00 |   50000.00 | 10:15:00  |        3.8 |         1 | NULL                             |    2 |
+|     10 | Tanya Verma  | EMP010   | female | 1990-03-08 | 2012-10-10 08:00:00 |   88000.00 | 08:00:00  |        4.5 |         1 | NULL                             |    1 |
++--------+--------------+----------+--------+------------+---------------------+------------+-----------+------------+-----------+----------------------------------+------+
+10 rows in set (0.00 sec)
+
+mysql> select d_name from department join employee on department.D_id=employee_emp_id;
+ERROR 1054 (42S22): Unknown column 'employee_emp_id' in 'on clause'
+mysql> select d_name from department join employee on department.D_id=employee.emp_id;
++-----------+
+| d_name    |
++-----------+
+| IT        |
+| HR        |
+| IT        |
+| marketing |
+| finance   |
++-----------+
+5 rows in set (0.00 sec)
+
+mysql> select d_name from department left join employee on department.D_id=employee.emp_id;
++-----------+
+| d_name    |
++-----------+
+| IT        |
+| HR        |
+| IT        |
+| marketing |
+| finance   |
++-----------+
+5 rows in set (0.00 sec)
+
+mysql> select d_name, emp_name from department left join employee on department.D_id=employee.emp_id;
++-----------+--------------+
+| d_name    | emp_name     |
++-----------+--------------+
+| IT        | Aarav Sharma |
+| HR        | Ananya Iyer  |
+| IT        | Rohan Desai  |
+| marketing | Priya Nair   |
+| finance   | Karan Mehta  |
++-----------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> select d_name, emp_name from department join employee on department.D_id=employee.emp_id;
++-----------+--------------+
+| d_name    | emp_name     |
++-----------+--------------+
+| IT        | Aarav Sharma |
+| HR        | Ananya Iyer  |
+| IT        | Rohan Desai  |
+| marketing | Priya Nair   |
+| finance   | Karan Mehta  |
++-----------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT e.name, d.dept_name
+    -> FROM employees e
+    -> INNER JOIN departments d ON e.dept_id = d.id;
+ERROR 1146 (42S02): Table 'mycompanydb.employees' doesn't exist
+mysql> select emp_id, emp_name , D_name from employee e left join department d on e.D_id = d.D_id union select e.emp_id, e.Emp_name, d.D_name from employee e right join department d on e.D_i
+d = d.D_id;
++--------+--------------+-----------+
+| emp_id | emp_name     | D_name    |
++--------+--------------+-----------+
+|      1 | Aarav Sharma | IT        |
+|      2 | Ananya Iyer  | HR        |
+|      3 | Rohan Desai  | IT        |
+|      4 | Priya Nair   | IT        |
+|      5 | Karan Mehta  | HR        |
+|      6 | Sneha Reddy  | IT        |
+|      7 | Vikram Singh | IT        |
+|      8 | Meera Patil  | marketing |
+|      9 | Akhil Joshi  | HR        |
+|     10 | Tanya Verma  | IT        |
+|   NULL | NULL         | finance   |
++--------+--------------+-----------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT e.emp_id , e.emp_name ,d.Dpt_code, d.D_name ,d.D_location FROM employee e LEFT JOIN department d ON e.D_id = d.D_id;
++--------+--------------+----------+-----------+------------+
+| emp_id | emp_name     | Dpt_code | D_name    | D_location |
++--------+--------------+----------+-----------+------------+
+|      1 | Aarav Sharma | 101      | IT        | mumbai     |
+|      2 | Ananya Iyer  | 102      | HR        | pune       |
+|      3 | Rohan Desai  | 101      | IT        | mumbai     |
+|      4 | Priya Nair   | 103      | IT        | delhi      |
+|      5 | Karan Mehta  | 102      | HR        | pune       |
+|      6 | Sneha Reddy  | 103      | IT        | delhi      |
+|      7 | Vikram Singh | 101      | IT        | mumbai     |
+|      8 | Meera Patil  | 104      | marketing | delhi      |
+|      9 | Akhil Joshi  | 102      | HR        | pune       |
+|     10 | Tanya Verma  | 101      | IT        | mumbai     |
++--------+--------------+----------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT d.D_id, d.Dpt_code, d.D_name, d.D_location, e.emp_id, e.emp_name FROM employee e RIGHT JOIN department d ON e.D_id = d.D_id;
++------+----------+-----------+------------+--------+--------------+
+| D_id | Dpt_code | D_name    | D_location | emp_id | emp_name     |
++------+----------+-----------+------------+--------+--------------+
+|    1 | 101      | IT        | mumbai     |      1 | Aarav Sharma |
+|    1 | 101      | IT        | mumbai     |      3 | Rohan Desai  |
+|    1 | 101      | IT        | mumbai     |      7 | Vikram Singh |
+|    1 | 101      | IT        | mumbai     |     10 | Tanya Verma  |
+|    2 | 102      | HR        | pune       |      2 | Ananya Iyer  |
+|    2 | 102      | HR        | pune       |      5 | Karan Mehta  |
+|    2 | 102      | HR        | pune       |      9 | Akhil Joshi  |
+|    3 | 103      | IT        | delhi      |      4 | Priya Nair   |
+|    3 | 103      | IT        | delhi      |      6 | Sneha Reddy  |
+|    4 | 104      | marketing | delhi      |      8 | Meera Patil  |
+|    5 | 105      | finance   | mumbai     |   NULL | NULL         |
++------+----------+-----------+------------+--------+--------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from department;
++------+----------+-----------+------------+
+| D_id | Dpt_code | D_name    | D_location |
++------+----------+-----------+------------+
+|    1 | 101      | IT        | mumbai     |
+|    2 | 102      | HR        | pune       |
+|    3 | 103      | IT        | delhi      |
+|    4 | 104      | marketing | delhi      |
+|    5 | 105      | finance   | mumbai     |
++------+----------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee;
++--------+--------------+----------+--------+------------+---------------------+------------+-----------+------------+-----------+----------------------------------+------+
+| emp_id | emp_name     | emp_code | gender | emp_DOB    | emp_DOJ             | Emp_salary | Work_time | emp_rating | is_active | Profile_Picture                  | D_id |
++--------+--------------+----------+--------+------------+---------------------+------------+-----------+------------+-----------+----------------------------------+------+
+|      1 | Aarav Sharma | EMP001   | male   | 1990-05-15 | 2015-06-01 09:00:00 |   65000.00 | 09:00:00  |        4.2 |         1 | NULL                             |    1 |
+|      2 | Ananya Iyer  | EMP002   | female | 1992-08-25 | 2016-07-15 09:30:00 |   72000.00 | 09:30:00  |        4.6 |         1 | NULL                             |    2 |
+|      3 | Rohan Desai  | EMP003   | male   | 1988-02-10 | 2014-05-20 08:45:00 |   80000.00 | 08:45:00  |        4.8 |         1 | NULL                             |    1 |
+|      4 | Priya Nair   | EMP004   | female | 1995-12-05 | 2019-01-10 09:15:00 |   56000.00 | 09:15:00  |        3.9 |         1 | NULL                             |    3 |
+|      5 | Karan Mehta  | EMP005   | male   | 1991-07-22 | 2017-03-18 10:00:00 |   67000.00 | 10:00:00  |          4 |         1 | NULL                             |    2 |
+|      6 | Sneha Reddy  | EMP006   | female | 1993-11-11 | 2018-02-05 09:00:00 |   59000.00 | 09:00:00  |        4.3 |         1 | NULL                             |    3 |
+|      7 | Vikram Singh | EMP007   | male   | 1987-01-30 | 2013-04-22 08:30:00 |   90000.00 | 08:30:00  |        4.9 |         1 | NULL                             |    1 |
+|      8 | Meera Patil  | EMP008   | female | 1994-09-19 | 2020-08-17 09:45:00 |   54000.00 | 09:45:00  |        3.7 |         1 | NULL                             |    4 |
+|      9 | Akhil Joshi  | EMP009   | male   | 1996-04-12 | 2021-06-30 10:15:00 |   50000.00 | 10:15:00  |        3.8 |         1 | NULL                             |    2 |
+|     10 | Tanya Verma  | EMP010   | female | 1990-03-08 | 2012-10-10 08:00:00 |   88000.00 | 08:00:00  |        4.5 |         1 | NULL                             |    1 |
++--------+--------------+----------+--------+------------+---------------------+------------+-----------+------------+-----------+----------------------------------+------+
+10 rows in set (0.00 sec)
+
+mysql> ^P^P

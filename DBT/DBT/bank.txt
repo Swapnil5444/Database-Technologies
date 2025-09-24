@@ -1,0 +1,11 @@
+select * from employee;
+select * from employee where department ='IT' AND salary > 50000;
+SELECT * FROM employee WHERE city = 'Mumbai' OR city = 'Delhi';
+SELECT * FROM employee WHERE not department='HR';
+SELECT * FROM employee WHERE department = 'Finance' XOR salary > 40000;
+SELECT * FROM employee WHERE (department = 'Finance' AND (salary>30000 OR age<25));
+SELECT * FROM employee WHERE not city ='Pune'AND salary > 35000;
+SELECT * FROM employee WHERE department='IT' OR not department='Finance';
+SELECT * FROM employee WHERE (gender = 'male' XOR (salary > 60000 AND department='HR'));
+SELECT * FROM employee WHERE (age>30 AND (department='IT' OR department='Finance'));
+SELECT * FROM employee WHERE NOT city = 'delhi' XOR salary < 25000;

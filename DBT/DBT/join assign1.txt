@@ -1,0 +1,340 @@
+mysql> create database InstitudeDB;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use institudeDB;
+Database changed
+mysql> create table institude;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table institude(Ins_id int primary key, Ins_name varchar(20), city varchar(30));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create table student(S_id int primary key, S_name varchar(20), S_age int, Ins_id int, course varchar(20), foreign key Ins_id references institude(Ins_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'references institude(Ins_id))' at line 1
+mysql> create table student(S_id int primary key, S_name varchar(20), S_age int, Ins_id int, course varchar(20), foreign key (Ins_id) references institude(Ins_id));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| S_id   | int         | NO   | PRI | NULL    |       |
+| S_name | varchar(20) | YES  |     | NULL    |       |
+| S_age  | int         | YES  |     | NULL    |       |
+| Ins_id | int         | YES  | MUL | NULL    |       |
+| course | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO institude (Ins_id, Ins_name, city) VALUES
+    -> (1, 'IIT Bombay', 'Mumbai'),
+    -> (2, 'IIT Delhi', 'Delhi'),
+    -> (3, 'IIT Madras', 'Chennai'),
+    -> (4, 'IIT Kanpur', 'Kanpur'),
+    -> (5, 'IISc Bangalore', 'Bangalore'),
+    -> (6, 'NIT Trichy', 'Tiruchirappalli'),
+    -> (7, 'BITS Pilani', 'Pilani'),
+    -> (8, 'Jadavpur University', 'Kolkata');
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO institude (Ins_id, Ins_name, city) VALUES
+    -> (9, NULL, 'Jaipur'),
+    -> (10, 'Amity University', NULL);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO students (S_id, S_name, S_age, Ins_id, course) VALUES
+    -> (101, 'Rahul Sharma', 20, 1, 'Computer Science'),
+    -> (102, 'Priya Verma', 21, 2, 'Electrical Engineering'),
+    -> (103, 'Aman Gupta', 22, 3, 'Mechanical Engineering'),
+    -> (104, 'Sneha Reddy', 20, 4, 'Civil Engineering'),
+    -> (105, 'Kunal Mehta', 23, 5, 'Data Science'),
+    -> (106, 'Divya Singh', 19, 6, 'Information Tech'),
+    -> (107, 'Ravi Kumar', 22, 7, 'Chemical Engineering'),
+    -> (108, 'Meera Nair', 21, 8, 'Architecture'),
+    -> (109, 'Anjali Desai', 20, NULL, 'Physics'),
+    -> (110, 'Vikram Joshi', 22, NULL, 'Mathematics');
+ERROR 1146 (42S02): Table 'institudedb.students' doesn't exist
+mysql> INSERT INTO student (S_id, S_name, S_age, Ins_id, course) VALUES
+    -> (101, 'Rahul Sharma', 20, 1, 'Computer Science'),
+    -> (102, 'Priya Verma', 21, 2, 'Electrical Engineering'),
+    -> (103, 'Aman Gupta', 22, 3, 'Mechanical Engineering'),
+    -> (104, 'Sneha Reddy', 20, 4, 'Civil Engineering'),
+    -> (105, 'Kunal Mehta', 23, 5, 'Data Science'),
+    -> (106, 'Divya Singh', 19, 6, 'Information Tech'),
+    -> (107, 'Ravi Kumar', 22, 7, 'Chemical Engineering'),
+    -> (108, 'Meera Nair', 21, 8, 'Architecture'),
+    -> (109, 'Anjali Desai', 20, NULL, 'Physics'),
+    -> (110, 'Vikram Joshi', 22, NULL, 'Mathematics');
+ERROR 1406 (22001): Data too long for column 'course' at row 2
+mysql> ALTER TABLE students MODIFY course VARCHAR(50);
+ERROR 1146 (42S02): Table 'institudedb.students' doesn't exist
+mysql> ALTER TABLE student MODIFY course VARCHAR(50);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO student (S_id, S_name, S_age, Ins_id, course) VALUES
+    -> (101, 'Rahul Sharma', 20, 1, 'Computer Science'),
+    -> (102, 'Priya Verma', 21, 2, 'Electrical Engineering'),
+    -> (103, 'Aman Gupta', 22, 3, 'Mechanical Engineering'),
+    -> (104, 'Sneha Reddy', 20, 4, 'Civil Engineering'),
+    -> (105, 'Kunal Mehta', 23, 5, 'Data Science'),
+    -> (106, 'Divya Singh', 19, 6, 'Information Tech'),
+    -> (107, 'Ravi Kumar', 22, 7, 'Chemical Engineering'),
+    -> (108, 'Meera Nair', 21, 8, 'Architecture'),
+    -> (109, 'Anjali Desai', 20, NULL, 'Physics'),
+    -> (110, 'Vikram Joshi', 22, NULL, 'Mathematics');
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from institude;
++--------+---------------------+-----------------+
+| Ins_id | Ins_name            | city            |
++--------+---------------------+-----------------+
+|      1 | IIT Bombay          | Mumbai          |
+|      2 | IIT Delhi           | Delhi           |
+|      3 | IIT Madras          | Chennai         |
+|      4 | IIT Kanpur          | Kanpur          |
+|      5 | IISc Bangalore      | Bangalore       |
+|      6 | NIT Trichy          | Tiruchirappalli |
+|      7 | BITS Pilani         | Pilani          |
+|      8 | Jadavpur University | Kolkata         |
+|      9 | NULL                | Jaipur          |
+|     10 | Amity University    | NULL            |
++--------+---------------------+-----------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+--------------+-------+--------+------------------------+
+| S_id | S_name       | S_age | Ins_id | course                 |
++------+--------------+-------+--------+------------------------+
+|  101 | Rahul Sharma |    20 |      1 | Computer Science       |
+|  102 | Priya Verma  |    21 |      2 | Electrical Engineering |
+|  103 | Aman Gupta   |    22 |      3 | Mechanical Engineering |
+|  104 | Sneha Reddy  |    20 |      4 | Civil Engineering      |
+|  105 | Kunal Mehta  |    23 |      5 | Data Science           |
+|  106 | Divya Singh  |    19 |      6 | Information Tech       |
+|  107 | Ravi Kumar   |    22 |      7 | Chemical Engineering   |
+|  108 | Meera Nair   |    21 |      8 | Architecture           |
+|  109 | Anjali Desai |    20 |   NULL | Physics                |
+|  110 | Vikram Joshi |    22 |   NULL | Mathematics            |
++------+--------------+-------+--------+------------------------+
+10 rows in set (0.00 sec)
+
+mysql> insert into institude values(11, 'IIT bombay', 'Mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from institude;
++--------+---------------------+-----------------+
+| Ins_id | Ins_name            | city            |
++--------+---------------------+-----------------+
+|      1 | IIT Bombay          | Mumbai          |
+|      2 | IIT Delhi           | Delhi           |
+|      3 | IIT Madras          | Chennai         |
+|      4 | IIT Kanpur          | Kanpur          |
+|      5 | IISc Bangalore      | Bangalore       |
+|      6 | NIT Trichy          | Tiruchirappalli |
+|      7 | BITS Pilani         | Pilani          |
+|      8 | Jadavpur University | Kolkata         |
+|      9 | NULL                | Jaipur          |
+|     10 | Amity University    | NULL            |
+|     11 | IIT bombay          | Mumbai          |
++--------+---------------------+-----------------+
+11 rows in set (0.00 sec)
+
+mysql> select S_name,S_course,Ins_name from student s inner join institude i on s.Ins_id = i.Ins_id;
+ERROR 1054 (42S22): Unknown column 'S_course' in 'field list'
+mysql> select s.S_name,s.S_course,i.Ins_name from student s inner join institude i on s.Ins_id = i.Ins_id;
+ERROR 1054 (42S22): Unknown column 's.S_course' in 'field list'
+mysql> select s.S_name,s.course,i.Ins_name from student s inner join institude i on s.Ins_id = i.Ins_id;
++--------------+------------------------+---------------------+
+| S_name       | course                 | Ins_name            |
++--------------+------------------------+---------------------+
+| Rahul Sharma | Computer Science       | IIT Bombay          |
+| Priya Verma  | Electrical Engineering | IIT Delhi           |
+| Aman Gupta   | Mechanical Engineering | IIT Madras          |
+| Sneha Reddy  | Civil Engineering      | IIT Kanpur          |
+| Kunal Mehta  | Data Science           | IISc Bangalore      |
+| Divya Singh  | Information Tech       | NIT Trichy          |
+| Ravi Kumar   | Chemical Engineering   | BITS Pilani         |
+| Meera Nair   | Architecture           | Jadavpur University |
++--------------+------------------------+---------------------+
+8 rows in set (0.00 sec)
+
+mysql> select s.S_name,s.course,i.Ins_name from student s inner join institude i on s.Ins_id = null;
+Empty set (0.00 sec)
+
+mysql> SELECT s.student_name, s.course, i.institute_name
+    -> FROM Students s
+    -> INNER JOIN Institute i ON s.institute_id = i.institute_id
+    -> WHERE i.city = 'Mumbai';
+ERROR 1146 (42S02): Table 'institudedb.students' doesn't exist
+mysql> SELECT s.s_name, course, i.institude_name
+    -> FROM Student s
+    -> INNER JOIN Institude i ON s.institude_id = i.institude_id
+    -> WHERE i.city = 'Mumbai';
+ERROR 1054 (42S22): Unknown column 'i.institude_name' in 'field list'
+mysql> SELECT s.s_name, course, i.ins_name
+    -> FROM Student s
+    -> INNER JOIN Institude i ON s.ins_id = i.ins_id
+    -> WHERE i.city = 'Mumbai';
++--------------+------------------+------------+
+| s_name       | course           | ins_name   |
++--------------+------------------+------------+
+| Rahul Sharma | Computer Science | IIT Bombay |
++--------------+------------------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into student values(111,'sumit D',22,11,'physics');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT s.s_name, course, i.ins_name
+    -> FROM Student s
+    -> INNER JOIN Institude i ON s.ins_id = i.ins_id
+    -> WHERE i.city = 'Mumbai';
++--------------+------------------+------------+
+| s_name       | course           | ins_name   |
++--------------+------------------+------------+
+| Rahul Sharma | Computer Science | IIT Bombay |
+| sumit D      | physics          | IIT bombay |
++--------------+------------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->   i.Ins_id,
+    ->   i.Ins_name,
+    ->   i.city
+    -> FROM
+    ->   institude i
+    -> LEFT JOIN
+    ->   students s ON i.Ins_id = s.Ins_id
+    -> WHERE
+    ->   s.S_id IS NULL;
+ERROR 1146 (42S02): Table 'institudedb.students' doesn't exist
+mysql> SELECT
+    ->   i.Ins_id,
+    ->   i.Ins_name,
+    ->   i.city
+    -> FROM
+    ->   institude i
+    -> LEFT JOIN
+    ->   student s ON i.Ins_id = s.Ins_id
+    -> WHERE
+    ->   s.S_id IS NULL;
++--------+------------------+--------+
+| Ins_id | Ins_name         | city   |
++--------+------------------+--------+
+|      9 | NULL             | Jaipur |
+|     10 | Amity University | NULL   |
++--------+------------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->   i.Ins_id,
+    ->   i.Ins_name,
+    ->   i.city,
+    ->   s.S_id,
+    ->   s.S_name,
+    ->   s.course
+    -> FROM
+    ->   institude i
+    -> INNER JOIN
+    ->   students s ON i.Ins_id = s.Ins_id
+    -> ORDER BY
+    ->   i.Ins_id, s.S_name;
+ERROR 1146 (42S02): Table 'institudedb.students' doesn't exist
+mysql> SELECT
+    ->  i.Ins_id,  i.Ins_name, i.city,  s.S_id, s.S_name,  s.course FROM  institude i INNER JOIN  student s ON i.Ins_id = s.Ins_id ORDER BY  i.Ins_id, s.S_name;
++--------+---------------------+-----------------+------+--------------+------------------------+
+| Ins_id | Ins_name            | city            | S_id | S_name       | course                 |
++--------+---------------------+-----------------+------+--------------+------------------------+
+|      1 | IIT Bombay          | Mumbai          |  101 | Rahul Sharma | Computer Science       |
+|      2 | IIT Delhi           | Delhi           |  102 | Priya Verma  | Electrical Engineering |
+|      3 | IIT Madras          | Chennai         |  103 | Aman Gupta   | Mechanical Engineering |
+|      4 | IIT Kanpur          | Kanpur          |  104 | Sneha Reddy  | Civil Engineering      |
+|      5 | IISc Bangalore      | Bangalore       |  105 | Kunal Mehta  | Data Science           |
+|      6 | NIT Trichy          | Tiruchirappalli |  106 | Divya Singh  | Information Tech       |
+|      7 | BITS Pilani         | Pilani          |  107 | Ravi Kumar   | Chemical Engineering   |
+|      8 | Jadavpur University | Kolkata         |  108 | Meera Nair   | Architecture           |
+|     11 | IIT bombay          | Mumbai          |  111 | sumit D      | physics                |
++--------+---------------------+-----------------+------+--------------+------------------------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT i.Ins_id, i.Ins_name, i.city, s.S_id, s.S_name, s.S_age, s.course FROM institude i LEFT JOIN students s ON i.Ins_id = s.Ins_id ORDER BY i.Ins_id;
+ERROR 1146 (42S02): Table 'institudedb.students' doesn't exist
+mysql> SELECT i.Ins_id, i.Ins_name, i.city, s.S_id, s.S_name, s.S_age, s.course FROM institude i LEFT JOIN student s ON i.Ins_id = s.Ins_id ORDER BY i.Ins_id;
++--------+---------------------+-----------------+------+--------------+-------+------------------------+
+| Ins_id | Ins_name            | city            | S_id | S_name       | S_age | course                 |
++--------+---------------------+-----------------+------+--------------+-------+------------------------+
+|      1 | IIT Bombay          | Mumbai          |  101 | Rahul Sharma |    20 | Computer Science       |
+|      2 | IIT Delhi           | Delhi           |  102 | Priya Verma  |    21 | Electrical Engineering |
+|      3 | IIT Madras          | Chennai         |  103 | Aman Gupta   |    22 | Mechanical Engineering |
+|      4 | IIT Kanpur          | Kanpur          |  104 | Sneha Reddy  |    20 | Civil Engineering      |
+|      5 | IISc Bangalore      | Bangalore       |  105 | Kunal Mehta  |    23 | Data Science           |
+|      6 | NIT Trichy          | Tiruchirappalli |  106 | Divya Singh  |    19 | Information Tech       |
+|      7 | BITS Pilani         | Pilani          |  107 | Ravi Kumar   |    22 | Chemical Engineering   |
+|      8 | Jadavpur University | Kolkata         |  108 | Meera Nair   |    21 | Architecture           |
+|      9 | NULL                | Jaipur          | NULL | NULL         |  NULL | NULL                   |
+|     10 | Amity University    | NULL            | NULL | NULL         |  NULL | NULL                   |
+|     11 | IIT bombay          | Mumbai          |  111 | sumit D      |    22 | physics                |
++--------+---------------------+-----------------+------+--------------+-------+------------------------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT s.S_id, s.S_name, s.course, i.Ins_id, i.Ins_name, i.city FROM students s LEFT JOIN institude i ON s.Ins_id = i.Ins_id UNION SELECT s.S_id, s.S_name, s.course, i.Ins_id, i.Ins_name, i.city FROM student s RIGHT JOIN institude i ON s.Ins_id = i.Ins_id ORDER BY S_id, Ins_id;
+ERROR 1146 (42S02): Table 'institudedb.students' doesn't exist
+mysql> SELECT s.S_id, s.S_name, s.course, i.Ins_id, i.Ins_name, i.city FROM student s LEFT JOIN institude i ON s.Ins_id = i.Ins_id UNION SELECT s.S_id, s.S_name, s.course, i.Ins_id, i.Ins_na
+me, i.city FROM student s RIGHT JOIN institude i ON s.Ins_id = i.Ins_id ORDER BY S_id, Ins_id;
++------+--------------+------------------------+--------+---------------------+-----------------+
+| S_id | S_name       | course                 | Ins_id | Ins_name            | city            |
++------+--------------+------------------------+--------+---------------------+-----------------+
+| NULL | NULL         | NULL                   |      9 | NULL                | Jaipur          |
+| NULL | NULL         | NULL                   |     10 | Amity University    | NULL            |
+|  101 | Rahul Sharma | Computer Science       |      1 | IIT Bombay          | Mumbai          |
+|  102 | Priya Verma  | Electrical Engineering |      2 | IIT Delhi           | Delhi           |
+|  103 | Aman Gupta   | Mechanical Engineering |      3 | IIT Madras          | Chennai         |
+|  104 | Sneha Reddy  | Civil Engineering      |      4 | IIT Kanpur          | Kanpur          |
+|  105 | Kunal Mehta  | Data Science           |      5 | IISc Bangalore      | Bangalore       |
+|  106 | Divya Singh  | Information Tech       |      6 | NIT Trichy          | Tiruchirappalli |
+|  107 | Ravi Kumar   | Chemical Engineering   |      7 | BITS Pilani         | Pilani          |
+|  108 | Meera Nair   | Architecture           |      8 | Jadavpur University | Kolkata         |
+|  109 | Anjali Desai | Physics                |   NULL | NULL                | NULL            |
+|  110 | Vikram Joshi | Mathematics            |   NULL | NULL                | NULL            |
+|  111 | sumit D      | physics                |     11 | IIT bombay          | Mumbai          |
++------+--------------+------------------------+--------+---------------------+-----------------+
+13 rows in set (0.00 sec)
+
+mysql> select * from institude;
++--------+---------------------+-----------------+
+| Ins_id | Ins_name            | city            |
++--------+---------------------+-----------------+
+|      1 | IIT Bombay          | Mumbai          |
+|      2 | IIT Delhi           | Delhi           |
+|      3 | IIT Madras          | Chennai         |
+|      4 | IIT Kanpur          | Kanpur          |
+|      5 | IISc Bangalore      | Bangalore       |
+|      6 | NIT Trichy          | Tiruchirappalli |
+|      7 | BITS Pilani         | Pilani          |
+|      8 | Jadavpur University | Kolkata         |
+|      9 | NULL                | Jaipur          |
+|     10 | Amity University    | NULL            |
+|     11 | IIT bombay          | Mumbai          |
++--------+---------------------+-----------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+--------------+-------+--------+------------------------+
+| S_id | S_name       | S_age | Ins_id | course                 |
++------+--------------+-------+--------+------------------------+
+|  101 | Rahul Sharma |    20 |      1 | Computer Science       |
+|  102 | Priya Verma  |    21 |      2 | Electrical Engineering |
+|  103 | Aman Gupta   |    22 |      3 | Mechanical Engineering |
+|  104 | Sneha Reddy  |    20 |      4 | Civil Engineering      |
+|  105 | Kunal Mehta  |    23 |      5 | Data Science           |
+|  106 | Divya Singh  |    19 |      6 | Information Tech       |
+|  107 | Ravi Kumar   |    22 |      7 | Chemical Engineering   |
+|  108 | Meera Nair   |    21 |      8 | Architecture           |
+|  109 | Anjali Desai |    20 |   NULL | Physics                |
+|  110 | Vikram Joshi |    22 |   NULL | Mathematics            |
+|  111 | sumit D      |    22 |     11 | physics                |
++------+--------------+-------+--------+------------------------+
+11 rows in set (0.00 sec)
